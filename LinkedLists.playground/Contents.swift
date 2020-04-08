@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 /*
  Linked List Notes:
@@ -92,6 +92,23 @@ class LinkedList<T> {
             lastNode.next = newNode                   //And here
         } else {                                      //Otherwise if ther is no last object, we know our list is empty so we...
             head = newNode                            //Create the head
+        }                                             //NOTE: If the order of the list doesnt matter, it is faster to add nodes to the front of the List
+    }
+    
+    //Inserting a node at a certain index
+    public func insert(_ node: LinkedListNode<T>, atIndex index: Int) {
+        let newNode = node
+        if index == 0 {               //If we are trying to insert at the front...
+            newNode.next = head       //We need to set the newNode.next to be the "old" head
+            head?.previous = newNode  //Then we set "old" head.previous pointer to be the newNode
+            head = newNode            //Make the change, the newNode is now the head
+        } else {                                                                //Otherwise if the index is greater than zero...
+            guard let prev = self.findNode(atIndex: index - 1) else { return }  //We need a reference to the node previous to the index
+            let next = prev.next                                                //Hold the reference to the "next" node.
+            newNode.previous = prev                                             //This is setting the newNodes "previous" node
+            newNode.next = prev.next                                            //This is setting the newNodes "next" node
+            prev.next = newNode
+            next?.previous = newNode
         }
     }
     
@@ -106,6 +123,53 @@ class LinkedList<T> {
             count += 1                 //Then increase our count
         }
         return count                   //Finally if the next node is nil then we have reached the TAIL and exit the while loop
+    }
+    
+    //Fetch a node at a certain location
+    public func findNode(atIndex index: Int) -> LinkedListNode<T>? {
+        if index == 0 {              //If the index we are looking for is zero..
+           return head!              //We return the head
+         } else {                    //Otherwise when given an index greater than zero
+           var node = head!.next     //It starts at the head
+           for _ in 1..<index {      //As we step through the nodes...
+             node = node?.next       //We assign the node to the next node
+             if node == nil { //(*1) //If the node is nil then we have reached the tail meaning the index is out of bounds and we will crash
+               break                 //Then we exit the for loop
+             }
+           }
+           return node!              //Then return our node
+         }
+    }
+    
+    public func removeAll() {
+      head = nil
+    }
+    
+    public func remove(node: LinkedListNode<T>) -> T {
+      let prev = node.previous
+      let next = node.next
+
+      if let prev = prev {
+        prev.next = next
+      } else {
+        head = next
+      }
+      next?.previous = prev
+
+      node.previous = nil
+      node.next = nil
+      return node.value
+    }
+    
+    public func removeLast() -> T {
+      assert(!isEmpty)
+      return remove(node: last!)
+    }
+
+    public func removeAt(_ index: Int) -> T {
+      let node = findNode(atIndex: index)
+      assert(node != nil)
+      return remove(node: node!)
     }
 }
 
@@ -135,3 +199,11 @@ list.first?.next?.value     //Should be "World"
 list.last?.next             //Should be nil
 list.last?.previous?.value  //SHould be "Hello"
 
+//Lets try out our findNode func
+list.findNode(atIndex: 1)!.value //Sould be "World"
+//list.findNode(atIndex: 2)!.value //CRASH
+let swift = LinkedListNode(value: "Swift")
+list.insert(swift, atIndex: 1)
+list.first?.value
+list.first?.next?.value
+list.last?.value
