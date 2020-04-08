@@ -22,8 +22,12 @@ import Foundation
     * iterate, pick(6):                                        new = [3, 4, 5, 6, 8] old = []
  */
 
+//MARK: - Properties
+
 let array = [8, 3, 5, 4, 6]
 let longerArray = [74, 32, 43, 2, 90, 120, 58, 26, 19, 10]
+
+//MARK: - InsertionSort
 
 func insertionSort(_ array: [Int]) -> [Int] {
     let start = CFAbsoluteTimeGetCurrent()
@@ -40,8 +44,12 @@ func insertionSort(_ array: [Int]) -> [Int] {
     return newArray
 }
 
+//MARK: - Insetion Sort Test Cases
+
 insertionSort(array)
 insertionSort(longerArray)
+
+
 /*
  How does this work?
     * First we make a copy of the array
