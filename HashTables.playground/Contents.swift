@@ -82,11 +82,11 @@ public struct HashTable<Key: Hashable, Value> {
         return value(forKey: key)              //Look up an element
         }                                      //Update an existing element
       set {                                    //Remove an element
-        if let value = newValue {
-            updateValue(value, forKey: key)    //We can do all of these with a subscript function
-        } else {
-          removeValue(forKey: key)
-        }
+//        if let value = newValue {
+//            updateValue(value, forKey: key)    //We can do all of these with a subscript function
+//        } else {
+//          removeValue(forKey: key)
+//        }
       }
     }
     
@@ -138,3 +138,5 @@ hashTable["firstName"] = "Steve"   // insert
 let x = hashTable["firstName"]     // lookup
 hashTable["firstName"] = "Tim"     // update
 hashTable["firstName"] = nil       // delete
+
+

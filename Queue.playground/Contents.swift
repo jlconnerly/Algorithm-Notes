@@ -65,11 +65,13 @@ q.count             // 3
 q.dequeue()         // "Ada"
 q.array             // [nil, "Steve", "Tim"]
 q.count             // 2
+q.enqueue("Paul")
+q.array
 
 q.dequeue()         // "Steve"
 q.array             // [nil, nil, "Tim"]
 q.count             // 1
 
 q.enqueue("Grace")
-q.array             // [nil, nil, Tim, "Grace"]
+q.array             // [nil, nil, "Tim", "Grace"]
 q.count             // 2
