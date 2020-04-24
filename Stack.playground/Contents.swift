@@ -46,3 +46,12 @@ public struct Stack<T> {
     * When we push something it goes to the end of the stack. This keeps it O(1).
         otherwise if we try and put it at the beginning it is O(n) because we would then have to shift
  */
+var hintStack = Stack<Character>()
+let hint = "hint"
+let hintArray = Array(hint)
+
+for a in hintArray {
+    hintStack.push(a)
+}
+
+print(hintStack)
